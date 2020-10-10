@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'core',
     'member',
     'grade',
+    'classes',
 ]
 
 MIDDLEWARE = [
