@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from grade.models import Grade
+
 
 class Member(models.Model):
     """A generic member of the school"""
@@ -32,7 +34,12 @@ class Member(models.Model):
 
 class Student(Member):
     """A student of the school"""
-    scholar_year = models.PositiveSmallIntegerField()
+    scholar_year = models.ForeignKey(
+        Grade,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name='students',
+    )
     guardian1 = models.CharField(max_length=100)
     guardian2 = models.CharField(max_length=100, blank=True)
 
