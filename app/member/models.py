@@ -34,7 +34,7 @@ class Member(models.Model):
 
 class Student(Member):
     """A student of the school"""
-    scholar_year = models.ForeignKey(
+    grade = models.ForeignKey(
         Grade,
         null=True,
         on_delete=models.SET_NULL,
