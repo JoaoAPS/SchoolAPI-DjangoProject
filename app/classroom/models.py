@@ -10,9 +10,18 @@ class Classroom(models.Model):
     """A school classroom"""
 
     def validate_comma_separated_weekday_list(comma_sep_string):
-        for stringed_num in comma_sep_string.split(','):
-            if not (1 <= int(stringed_num) <= 7):
-                raise ValidationError(_("Invalid day of the week!"))
+        for day_str in comma_sep_string.split(','):
+            try:
+                day = int(day_str)
+            except ValueError:
+                raise ValidationError(_(
+                    "Days of the week must be a comma separated integer list"
+                ))
+            else:
+                if day < 1 or day > 7:
+                    raise ValidationError(_(
+                        "Days of the week must be between 1 and 7"
+                    ))
 
     name = models.CharField(max_length=255)
     identifier = models.CharField(max_length=50, unique=True)
