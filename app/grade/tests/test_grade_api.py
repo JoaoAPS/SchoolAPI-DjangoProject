@@ -24,12 +24,12 @@ class PublicGradeApiTests(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-    def test_unauthenticated_retrieve_request_forbidden(self):
+    def test_unauthenticated_retrieve_forbidden(self):
         """Test authentication is required to retrieve grades"""
         res = self.client.get(GRADE_LIST_URL)
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_unauthenticated_create_request_forbidden(self):
+    def test_unauthenticated_create_forbidden(self):
         """Test authentication is required to retrieve grades"""
         payload = {
             'name': 'Test',
@@ -53,8 +53,8 @@ class PrivateGradeApiTests(TestCase):
 
     def test_retrieve_grade_list(self):
         """Test retrieving the grade list"""
-        sample_grade(name='Test grade 1')
-        sample_grade(name='Test grade 2')
+        sample_grade(name='Test grade 1', rank=4)
+        sample_grade(name='Test grade 2', rank=2)
         res = self.client.get(GRADE_LIST_URL)
 
         grades = Grade.objects.all().order_by('rank')
