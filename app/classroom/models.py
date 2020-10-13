@@ -6,8 +6,8 @@ from django.utils.translation import gettext_lazy as _
 from grade.models import Grade
 
 
-class Class(models.Model):
-    """A school class"""
+class Classroom(models.Model):
+    """A school classroom"""
 
     def validate_comma_separated_weekday_list(comma_sep_string):
         for stringed_num in comma_sep_string.split(','):

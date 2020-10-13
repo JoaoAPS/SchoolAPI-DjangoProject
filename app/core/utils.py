@@ -3,7 +3,7 @@ import datetime
 
 from member.models import Member, Student, Teacher
 from grade.models import Grade
-from classes.models import Class
+from classroom.models import Classroom
 
 
 def _member_defaults():
@@ -58,8 +58,8 @@ def sample_grade(**options):
     return Grade.objects.create(**defaults)
 
 
-def sample_class(**options):
-    """Create and return a sample Class object"""
+def sample_classroom(**options):
+    """Create and return a sample Classroom object"""
     defaults = {
         'name': 'Adjvanced Physics',
         'identifier': uuid.uuid4(),
@@ -70,4 +70,4 @@ def sample_class(**options):
     }
     defaults.update(options)
 
-    return Class.objects.create(**defaults)
+    return Classroom.objects.create(**defaults)

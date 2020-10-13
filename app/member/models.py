@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from grade.models import Grade
-from classes.models import Class
+from classroom.models import Classroom
 
 
 class Member(models.Model):
@@ -43,7 +43,7 @@ class Student(Member):
     )
     guardian1 = models.CharField(max_length=100)
     guardian2 = models.CharField(max_length=100, blank=True)
-    classes = models.ManyToManyField(Class, related_name='students')
+    classes = models.ManyToManyField(Classroom, related_name='students')
 
 
 class Teacher(Member):
@@ -60,4 +60,4 @@ class Teacher(Member):
     )
     bank_agency = models.PositiveIntegerField()
     bank_account = models.PositiveIntegerField()
-    classes = models.ManyToManyField(Class, related_name='teachers')
+    classes = models.ManyToManyField(Classroom, related_name='teachers')
