@@ -10,7 +10,7 @@ def sample_member_payload(**options):
     """Return a dict with the required fields of a member object"""
     payload = {
         'fullname': "John da Silva Doe",
-        'id_doc': uuid.uuid4(),
+        'id_doc': str(uuid.uuid4()),
         'birthdate': '2000-05-13',
         'sex': 'M',
         'monthly_payment': 100.00,
@@ -27,7 +27,7 @@ def sample_classroom_payload(includeGrade: bool = False, **options):
     """Return a dict with the required fields of a classroom object"""
     payload = {
         'name': 'Advanced Physics',
-        'identifier': uuid.uuid4(),
+        'identifier': str(uuid.uuid4()),
         'room': 'A10',
         'time': datetime.time(hour=9, minute=30),
         'days_of_week': '1,3,5',
