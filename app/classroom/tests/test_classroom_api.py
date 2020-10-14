@@ -51,8 +51,8 @@ class PrivateClassroomApiTests(TestCase):
 
     def test_retrive_classroom_list(self):
         """Test retriving the classroom list"""
-        sample_classroom(name='CR 1')
-        sample_classroom(name='CR 2', grade=sample_grade())
+        sample_classroom(name='CR 1', identifier='BC01')
+        sample_classroom(name='CR 2', identifier='AB01', grade=sample_grade())
         classrooms = Classroom.objects.all().order_by('identifier')
         serializer = ClassroomListSerializer(classrooms, many=True)
         res = self.client.get(CLASSROOM_LIST_URL)

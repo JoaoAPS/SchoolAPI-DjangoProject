@@ -12,6 +12,10 @@ class ClassroomViewSet(viewsets.ModelViewSet):
     serializer_class = ClassroomListSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+    def get_queryset(self):
+        """Return the queryset ordered by indetifier"""
+        return self.queryset.order_by('identifier')
+
     def get_serializer_class(self):
         """Get the appropriate serializer"""
         if self.action == "retrieve":
