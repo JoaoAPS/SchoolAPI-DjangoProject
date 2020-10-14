@@ -32,6 +32,11 @@ class Member(models.Model):
     def __str__(self):
         return self.fullname
 
+    @classmethod
+    def get_active(cls):
+        """Return a queryset with only the active members"""
+        return cls.objects.filter(active=True)
+
 
 class Student(Member):
     """A student of the school"""
