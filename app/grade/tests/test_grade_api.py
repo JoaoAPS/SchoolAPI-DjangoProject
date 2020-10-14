@@ -10,12 +10,12 @@ from grade.serializers import GradeSerializer
 from core.utils import sample_grade
 
 
-GRADE_LIST_URL = reverse('grades:grade-list')
+GRADE_LIST_URL = reverse('grade:grade-list')
 
 
 def grade_detail_url(grade_id):
     """Return the url for the grade object detail view with the specified id"""
-    return reverse('grades:grade-detail', args=[grade_id])
+    return reverse('grade:grade-detail', args=[grade_id])
 
 
 class PublicGradeApiTests(TestCase):

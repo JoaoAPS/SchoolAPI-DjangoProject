@@ -6,6 +6,6 @@ from classroom.views import ClassroomViewSet
 app_name = 'classroom'
 
 router = DefaultRouter()
-router.register('classrooms', ClassroomViewSet)
+router.register('', ClassroomViewSet)
 
 urlpatterns = router.urls
