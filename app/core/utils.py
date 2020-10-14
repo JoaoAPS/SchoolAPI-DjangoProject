@@ -23,6 +23,29 @@ def sample_member_payload(**options):
     return payload
 
 
+def sample_student_payload(**options):
+    payload = sample_member_payload()
+    payload.update({
+        'guardian1': 'My legal guardian',
+        'guardian2': 'Another guardian'
+    })
+    payload.update(options)
+
+    return payload
+
+
+def sample_teacher_payload(**options):
+    payload = sample_member_payload()
+    payload.update({
+        'academic_level': 'Ms',
+        'bank_agency': 461287,
+        'bank_account': 1241412
+    })
+    payload.update(options)
+
+    return payload
+
+
 def sample_classroom_payload(includeGrade: bool = False, **options):
     """Return a dict with the required fields of a classroom object"""
     payload = {
@@ -40,30 +63,26 @@ def sample_classroom_payload(includeGrade: bool = False, **options):
 
 def sample_member(**options):
     """Create and return a sample Member object"""
-    defaults = sample_member_payload()
-    defaults.update(options)
+    fields = sample_member_payload()
+    fields.update(options)
 
-    return Member.objects.create(**defaults)
+    return Member.objects.create(**fields)
 
 
 def sample_student(**options):
-    defaults = sample_member_payload()
-    defaults.update({'guardian1': 'My legal guardian'})
-    defaults.update(options)
+    """Create and return a sample Student object"""
+    fields = sample_student_payload()
+    fields.update(options)
 
-    return Student(**options)
+    return Student.objects.create(**fields)
 
 
 def sample_teacher(**options):
-    defaults = sample_member_payload()
-    defaults.update({
-        'academic_level': 'Ms',
-        'bank_agency': 461287,
-        'bank_account': 1241412
-    })
-    defaults.update(options)
+    """Create and return a sample Teacher object"""
+    fields = sample_teacher_payload()
+    fields.update(options)
 
-    return Teacher(**options)
+    return Teacher.objects.create(**fields)
 
 
 def sample_grade(**options):
