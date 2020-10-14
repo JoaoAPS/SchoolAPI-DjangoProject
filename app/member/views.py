@@ -1,6 +1,6 @@
 from rest_framework import viewsets, permissions
 
-from member.serializers import StudentListSerializer
+from member.serializers import StudentListSerializer, StudentDetailSerializer
 from member.models import Student
 
 
@@ -10,6 +10,12 @@ class StudentViewSet(viewsets.ModelViewSet):
     queryset = Student.objects.all()
     serializer_class = StudentListSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_serializer_class(self):
+        """Return the appropriate serializer class"""
+        if self.action == 'retrieve':
+            return StudentDetailSerializer
+        return self.serializer_class
 
     def get_queryset(self):
         """Return the sorted queryset after applying the filters"""

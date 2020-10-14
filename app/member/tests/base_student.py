@@ -6,7 +6,7 @@ from rest_framework.test import APIClient
 from rest_framework import status
 
 from member.models import Student
-from member.serializers import StudentListSerializer# , StudentDetailSerializer
+from member.serializers import StudentListSerializer , StudentDetailSerializer
 from core.utils import \
     sample_student_payload, sample_student, sample_grade, sample_classroom
 
