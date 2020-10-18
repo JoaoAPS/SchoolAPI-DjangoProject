@@ -1,6 +1,8 @@
 import uuid
 import datetime
 
+from django.contrib.auth import get_user_model
+
 from member.models import Member, Student, Teacher
 from grade.models import Grade
 from classroom.models import Classroom
@@ -25,10 +27,7 @@ def sample_member_payload(**options):
 
 def sample_student_payload(**options):
     payload = sample_member_payload()
-    payload.update({
-        'guardian1': 'My legal guardian',
-        'guardian2': 'Another guardian'
-    })
+    payload.update({'guardian1': 'My legal guardian'})
     payload.update(options)
 
     return payload
@@ -100,3 +99,11 @@ def sample_classroom(**options):
     """Create and return a sample Classroom object"""
     fields = sample_classroom_payload(True, **options)
     return Classroom.objects.create(**fields)
+
+
+def sample_user():
+    """Create and return a sample User object"""
+    return get_user_model().objects.create(
+        username='Test User',
+        password='TestPass'
+    )

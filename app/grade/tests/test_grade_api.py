@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.contrib.auth import get_user_model
 from django.shortcuts import reverse
 
 from rest_framework.test import APIClient
@@ -7,7 +6,7 @@ from rest_framework import status
 
 from grade.models import Grade
 from grade.serializers import GradeSerializer
-from core.utils import sample_grade
+from core.utils import sample_grade, sample_user
 
 
 GRADE_LIST_URL = reverse('grade:grade-list')
@@ -44,12 +43,8 @@ class PrivateGradeApiTests(TestCase):
     """Test the grade API for authenticated requests"""
 
     def setUp(self):
-        self.user = get_user_model().objects.create(
-            username='Test User',
-            password='TestPass'
-        )
         self.client = APIClient()
-        self.client.force_authenticate(self.user)
+        self.client.force_authenticate(sample_user())
 
     def test_retrieve_grade_list(self):
         """Test retrieving the grade list"""

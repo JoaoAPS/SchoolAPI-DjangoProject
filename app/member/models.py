@@ -20,7 +20,7 @@ class Member(models.Model):
     monthly_payment = models.DecimalField(decimal_places=2, max_digits=8)
     active = models.BooleanField(default=True)
     register_date = models.DateField(auto_now_add=True)
-    departure_date = models.DateField(null=True, default=None)
+    departure_date = models.DateField(null=True, blank=True, default=None)
     email = models.EmailField()
     phone_number = models.CharField(max_length=50)
     address = models.CharField(max_length=255)
@@ -43,6 +43,8 @@ class Student(Member):
     grade = models.ForeignKey(
         Grade,
         null=True,
+        blank=True,
+        default=None,
         on_delete=models.SET_NULL,
         related_name='students',
     )

@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.contrib.auth import get_user_model
 from django.shortcuts import reverse
 
 from rest_framework.test import APIClient
@@ -8,7 +7,11 @@ from rest_framework import status
 from classroom.models import Classroom
 from classroom.serializers import \
     ClassroomListSerializer, ClassroomDetailSerializer
-from core.utils import sample_classroom_payload, sample_grade, sample_classroom
+from core.utils import \
+    sample_classroom_payload, \
+    sample_grade, \
+    sample_classroom, \
+    sample_user
 
 
 CLASSROOM_LIST_URL = reverse('classroom:classroom-list')
@@ -42,12 +45,8 @@ class PrivateClassroomApiTests(TestCase):
     """Test the classroom api with authenticated requests"""
 
     def setUp(self):
-        self.user = get_user_model().objects.create(
-            username='Test User',
-            password='TestPass'
-        )
         self.client = APIClient()
-        self.client.force_authenticate(self.user)
+        self.client.force_authenticate(sample_user())
 
     def test_retrive_classroom_list(self):
         """Test retriving the classroom list"""

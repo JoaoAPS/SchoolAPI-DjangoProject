@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions
 
-from member.serializers import StudentListSerializer, StudentDetailSerializer
+from member.serializers import \
+    StudentListSerializer, StudentDetailSerializer, StudentCreateSerializer
 from member.models import Student
 
 
@@ -15,6 +16,8 @@ class StudentViewSet(viewsets.ModelViewSet):
         """Return the appropriate serializer class"""
         if self.action == 'retrieve':
             return StudentDetailSerializer
+        if self.action == 'create':
+            return StudentCreateSerializer
         return self.serializer_class
 
     def get_queryset(self):

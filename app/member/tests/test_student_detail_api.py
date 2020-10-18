@@ -1,4 +1,13 @@
-from .base_student import *
+from django.test import TestCase
+
+from rest_framework.test import APIClient
+from rest_framework import status
+
+from member.serializers import StudentDetailSerializer
+from core.utils import \
+    sample_student, sample_grade, sample_classroom, sample_user
+
+from .student_urls import student_detail_url
 
 
 class StudentDetailApiPositiveTests(TestCase):
