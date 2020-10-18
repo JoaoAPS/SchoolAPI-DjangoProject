@@ -1,11 +1,17 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, mixins, permissions
 
 from member.serializers import \
     StudentListSerializer, StudentDetailSerializer, StudentCreateSerializer
 from member.models import Student
 
 
-class StudentViewSet(viewsets.ModelViewSet):
+class StudentViewSet(
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+):
     """Views for managing the student class"""
 
     queryset = Student.objects.all()
