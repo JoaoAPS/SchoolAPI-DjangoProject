@@ -16,7 +16,7 @@ class StudentViewSet(viewsets.ModelViewSet):
         """Return the appropriate serializer class"""
         if self.action == 'retrieve':
             return StudentDetailSerializer
-        if self.action == 'create':
+        if self.action in ['create', 'update', 'partial_update']:
             return StudentCreateSerializer
         return self.serializer_class
 

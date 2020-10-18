@@ -12,7 +12,8 @@ from core.utils import \
     sample_student, \
     sample_grade, \
     sample_classroom, \
-    sample_user
+    sample_user, \
+    str_to_date
 
 from .student_urls import STUDENT_LIST_URL
 
@@ -88,10 +89,7 @@ class StudentCreateApiPositiveTests(TestCase):
         self.assertFalse(student.active)
         self.assertEqual(
             student.departure_date,
-            dt.datetime.strptime(
-                payload['departure_date'],
-                '%Y-%m-%d'
-            ).date()
+            str_to_date(payload['departure_date'])
         )
         self.assertEqual(student.guardian2, payload['guardian2'])
         self.assertEqual(student.grade, grade)
@@ -128,7 +126,7 @@ class StudentCreateApiNegativeTests(TestCase):
             self.assertFalse(Student.objects.filter(**payload).exists())
 
     def test_student_create_illegal_operation_negative(self):
-        """Test requests with illegal instructions cannot create student"""
+        """Test requests with illegal operations cannot create student"""
         student = sample_student(fullname="Joseph Alleph")
         payload = sample_student_payload(
             fullname="Joseph Doppelganger",

@@ -8,6 +8,11 @@ from grade.models import Grade
 from classroom.models import Classroom
 
 
+def str_to_date(date_str):
+    """Translate a iso-8601 formated string to a datetime.date object"""
+    return datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+
+
 def sample_member_payload(**options):
     """Return a dict with the required fields of a member object"""
     payload = {
