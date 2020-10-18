@@ -13,6 +13,7 @@ from classroom.serializers import ClassroomListSerializer
 
 class StudentListSerializer(serializers.ModelSerializer):
     """Serializer for the list view of the Student model"""
+    firstname = serializers.ReadOnlyField()
     grade = serializers.PrimaryKeyRelatedField(queryset=Grade.objects.all())
 
     class Meta:
@@ -26,22 +27,28 @@ class StudentListSerializer(serializers.ModelSerializer):
             'guardian1',
             'guardian2',
         ]
-        read_only_fields = ['id']
+        read_only_fields = ['id', 'firstname']
 
 
 class StudentDetailSerializer(serializers.ModelSerializer):
     """Serializer for the detail view of the Student model"""
+    firstname = serializers.ReadOnlyField()
     grade = GradeSerializer()
     classes = ClassroomListSerializer(many=True)
 
     class Meta:
         model = Student
         fields = '__all__'
-        read_only_fields = ['id']
+        read_only_fields = ['id', 'firstname']
 
 
 class StudentCreateSerializer(serializers.ModelSerializer):
     """Serializer for the create view of the Student model"""
+    firstname = serializers.ReadOnlyField()
+    birthdate = serializers.DateField(format='iso-8601', required=False)
+    register_date = serializers.DateField(format='iso-8601', required=False)
+    departure_date = serializers.DateField(format='iso-8601', required=False)
+    active = serializers.BooleanField(default=True)
     grade = serializers.PrimaryKeyRelatedField(
         queryset=Grade.objects.all(),
         required=False
@@ -51,15 +58,11 @@ class StudentCreateSerializer(serializers.ModelSerializer):
         many=True,
         required=False
     )
-    birthdate = serializers.DateField(format='iso-8601', required=False)
-    register_date = serializers.DateField(format='iso-8601', required=False)
-    departure_date = serializers.DateField(format='iso-8601', required=False)
-    active = serializers.BooleanField(default=True)
 
     class Meta:
         model = Student
         fields = '__all__'
-        read_only_fields = ['id']
+        read_only_fields = ['id', 'firstname']
 
     def validate_birthdate(self, value):
         """Assures birth date is in the past"""

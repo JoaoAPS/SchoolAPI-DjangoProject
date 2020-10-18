@@ -119,6 +119,7 @@ class StudentCreateApiNegativeTests(TestCase):
             sample_student_payload(classes=[1241]),
             sample_student_payload(monthly_payment=10000000000),
         ]
+
         for payload in payloads:
             res = self.client.post(STUDENT_LIST_URL, payload)
             payload.pop('classes', None)
@@ -142,13 +143,14 @@ class StudentCreateApiNegativeTests(TestCase):
 class StudentCreateApiDestructiveTests(TestCase):
     """Test the student create api for destructive requests"""
 
+    def setUp(self):
+        self.client = APIClient()
+        self.client.force_authenticate(sample_user())
+
     def test_student_create_cannot_set_id(self):
         """Test the student id cannot be set by the create request"""
-        client = APIClient()
-        client.force_authenticate(sample_user())
-
         payload = sample_student_payload(id=99999)
-        res = client.post(STUDENT_LIST_URL, payload)
+        res = self.client.post(STUDENT_LIST_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
 
@@ -159,3 +161,18 @@ class StudentCreateApiDestructiveTests(TestCase):
 
         self.assertNotEqual(student.id, request_id)
         self.assertNotEqual(res.data['id'], request_id)
+
+    def test_student_create_cannot_set_firstname(self):
+        """Test the student first name cannot be set by the create request"""
+        payload = sample_student_payload(firstname="Namo")
+        res = self.client.post(STUDENT_LIST_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED)
+
+        request_firstname = payload.pop('firstname')
+        student = Student.objects.filter(**payload)
+        self.assertTrue(student.exists())
+        student = student[0]
+
+        self.assertNotEqual(student.firstname, request_firstname)
+        self.assertNotEqual(res.data['firstname'], request_firstname)
