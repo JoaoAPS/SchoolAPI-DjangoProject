@@ -61,17 +61,6 @@ class StudentCreateSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['id']
 
-    def create(self, validated_data):
-        """Create a student base on the data"""
-        classes = validated_data.pop('classes')
-        student = Student.objects.create(**validated_data)
-
-        for classroom in classes:
-            student.classes.add(classroom)
-
-        student.save()
-        return student
-
     def validate_birthdate(self, value):
         """Assures birth date is in the past"""
         if value >= datetime.date.today():
