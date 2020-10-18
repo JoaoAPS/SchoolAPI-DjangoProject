@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from rest_framework import serializers
 
-from member.models import Student
+from member.models import Student, Teacher
 from grade.models import Grade
 from grade.serializers import GradeSerializer
 from classroom.models import Classroom
@@ -19,7 +19,6 @@ class StudentListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         exclude = [
-            'active',
             'monthly_payment',
             'register_date',
             'departure_date',
@@ -71,3 +70,20 @@ class StudentCreateSerializer(serializers.ModelSerializer):
                 "Birth date must be on the past"
             ))
         return value
+
+
+class TeacherListSerializer(serializers.ModelSerializer):
+    """Serializer for list view of the Teacher model"""
+    firstname = serializers.ReadOnlyField()
+
+    class Meta():
+        model = Teacher
+        exclude = [
+            'monthly_payment',
+            'register_date',
+            'departure_date',
+            'classes',
+            'bank_agency',
+            'bank_account',
+        ]
+        read_only_fields = ['id', 'firstname']

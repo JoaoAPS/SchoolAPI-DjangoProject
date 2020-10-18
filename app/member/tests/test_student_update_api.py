@@ -44,7 +44,7 @@ class StudentUpdateApiPublicRequests(TestCase):
 
 
 class StudentUpdateApiPostiveTests(TestCase):
-    """Test the student full update api for successfull requests"""
+    """Test the student full update api for successful requests"""
 
     def setUp(self):
         self.client = APIClient()
@@ -126,7 +126,7 @@ class StudentUpdateApiPostiveTests(TestCase):
         self.assertEqual(res.data, serializer.data)
 
     def test_student_optional_partial_update_positive(self):
-        """Test successfull partial update of a student with optional params"""
+        """Test successful partial update of a student with optional params"""
         grade = sample_grade()
         classroom1 = sample_classroom()
         classroom2 = sample_classroom()

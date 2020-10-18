@@ -14,7 +14,7 @@ STUDENT_LIST_URL = reverse('member:student-list')
 
 
 class StudentListApiPositiveTests(TestCase):
-    """Test the student list api for successfull requests"""
+    """Test the student list api for successful requests"""
 
     def setUp(self):
         self.user = sample_user()
@@ -83,7 +83,6 @@ class StudentListApiPositiveTests(TestCase):
         """Test the excluded model fields are not shown in list"""
         res = self.client.get(STUDENT_LIST_URL)
         excluded_fields = [
-            'active',
             'monthly_payment',
             'register_date',
             'departure_date',
@@ -163,7 +162,7 @@ class StudentListApiPositiveTests(TestCase):
 
 
 class StudentListApiNegativeTests(TestCase):
-    """Test the student list api for unsuccessfull requests"""
+    """Test the student list api for unsuccessful requests"""
 
     def test_unauthenticated_retrieve_list_forbidden(self):
         """Test an unauthenticated request cannot retrieve student list"""
