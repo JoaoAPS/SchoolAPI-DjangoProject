@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.shortcuts import reverse
 
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -8,7 +9,8 @@ from member.serializers import StudentListSerializer
 from core.utils import \
     sample_student, sample_grade, sample_classroom, sample_user
 
-from .student_urls import STUDENT_LIST_URL
+
+STUDENT_LIST_URL = reverse('member:student-list')
 
 
 class StudentListApiPositiveTests(TestCase):

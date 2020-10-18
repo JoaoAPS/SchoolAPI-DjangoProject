@@ -1,6 +1,7 @@
 import datetime as dt
 
 from django.test import TestCase
+from django.shortcuts import reverse
 
 from rest_framework.test import APIClient
 from rest_framework import status
@@ -15,7 +16,8 @@ from core.utils import \
     sample_user, \
     str_to_date
 
-from .student_urls import STUDENT_LIST_URL
+
+STUDENT_LIST_URL = reverse('member:student-list')
 
 
 class StudentCreateApiPublicRequests(TestCase):
