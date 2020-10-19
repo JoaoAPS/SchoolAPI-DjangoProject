@@ -5,7 +5,8 @@ from member.serializers import \
     StudentListSerializer, \
     StudentDetailSerializer, \
     StudentCreateSerializer, \
-    TeacherListSerializer
+    TeacherListSerializer, \
+    TeacherDetailSerializer
 
 
 class StudentViewSet(
@@ -51,12 +52,22 @@ class StudentViewSet(
         return filtered.order_by('fullname')
 
 
-class TeacherViewSet(viewsets.GenericViewSet, mixins.ListModelMixin):
+class TeacherViewSet(
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+):
     """Views for managing the Teacher model"""
 
     queryset = Teacher.objects.all()
     serializer_class = TeacherListSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get_serializer_class(self):
+        """Return the appropriate serializer class"""
+        if self.action == 'retrieve':
+            return TeacherDetailSerializer
+        return self.serializer_class
 
     def get_queryset(self):
         """Return the filtered and sorted queryset"""

@@ -87,3 +87,14 @@ class TeacherListSerializer(serializers.ModelSerializer):
             'bank_account',
         ]
         read_only_fields = ['id', 'firstname']
+
+
+class TeacherDetailSerializer(serializers.ModelSerializer):
+    """Serializer for list view of the Teacher model"""
+    firstname = serializers.ReadOnlyField()
+    classes = ClassroomListSerializer(many=True)
+
+    class Meta():
+        model = Teacher
+        fields = '__all__'
+        read_only_fields = ['id', 'firstname']
