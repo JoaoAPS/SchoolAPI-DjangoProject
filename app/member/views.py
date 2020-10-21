@@ -6,7 +6,8 @@ from member.serializers import \
     StudentDetailSerializer, \
     StudentCreateSerializer, \
     TeacherListSerializer, \
-    TeacherDetailSerializer
+    TeacherDetailSerializer, \
+    TeacherCreateSerializer
 
 
 class StudentViewSet(
@@ -56,6 +57,7 @@ class TeacherViewSet(
     viewsets.GenericViewSet,
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
 ):
     """Views for managing the Teacher model"""
 
@@ -67,6 +69,8 @@ class TeacherViewSet(
         """Return the appropriate serializer class"""
         if self.action == 'retrieve':
             return TeacherDetailSerializer
+        if self.action == 'create':
+            return TeacherCreateSerializer
         return self.serializer_class
 
     def get_queryset(self):

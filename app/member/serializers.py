@@ -73,7 +73,7 @@ class StudentCreateSerializer(serializers.ModelSerializer):
 
 
 class TeacherListSerializer(serializers.ModelSerializer):
-    """Serializer for list view of the Teacher model"""
+    """Serializer for the list view of the Teacher model"""
     firstname = serializers.ReadOnlyField()
 
     class Meta():
@@ -90,7 +90,7 @@ class TeacherListSerializer(serializers.ModelSerializer):
 
 
 class TeacherDetailSerializer(serializers.ModelSerializer):
-    """Serializer for list view of the Teacher model"""
+    """Serializer for the list view of the Teacher model"""
     firstname = serializers.ReadOnlyField()
     classes = ClassroomListSerializer(many=True)
 
@@ -98,3 +98,26 @@ class TeacherDetailSerializer(serializers.ModelSerializer):
         model = Teacher
         fields = '__all__'
         read_only_fields = ['id', 'firstname']
+
+
+class TeacherCreateSerializer(serializers.ModelSerializer):
+    """Serializer for the create view of the Teacher model"""
+    firstname = serializers.ReadOnlyField()
+    classes = serializers.PrimaryKeyRelatedField(
+        queryset=Classroom.objects.all(),
+        many=True
+    )
+    active = serializers.BooleanField(default=True)
+
+    class Meta():
+        model = Teacher
+        fields = '__all__'
+        read_only_fields = ['id', 'firstname']
+
+    def validate_birthdate(self, value):
+        """Assures the birth date is in the past"""
+        if value >= datetime.date.today():
+            raise serializers.ValidationError(_(
+                "Birth date must be on the past"
+            ))
+        return value
