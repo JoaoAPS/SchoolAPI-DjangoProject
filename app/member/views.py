@@ -58,6 +58,7 @@ class TeacherViewSet(
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
     mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
 ):
     """Views for managing the Teacher model"""
 
@@ -69,7 +70,7 @@ class TeacherViewSet(
         """Return the appropriate serializer class"""
         if self.action == 'retrieve':
             return TeacherDetailSerializer
-        if self.action == 'create':
+        if self.action in ['create', 'update', 'partial_update']:
             return TeacherCreateSerializer
         return self.serializer_class
 
